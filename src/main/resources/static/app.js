@@ -31,8 +31,7 @@ var app = (function () {
         var socket = new SockJS('/stompendpoint');
         stompClient = Stomp.over(socket);
         
-        // Subscribe to /topic/newpoint when the connection succeeds
-        stompClient.connect({}, function (frame) {
+         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/newpoint', function (eventbody) {
                 var point = JSON.parse(eventbody.body);
@@ -58,7 +57,7 @@ var app = (function () {
 
         publishPoint: function(px, py){
             var pt = new Point(px, py);
-            //console.info("Publishing point at " + pt.x + ", " + pt.y);
+            //console.log("Publishing point at " + pt.x + ", " + pt.y);
             addPointToCanvas(pt);
 
             if (stompClient.connected) {
