@@ -27,12 +27,12 @@ public class STOMPMessagesHandler {
         drawings.computeIfAbsent(Integer.parseInt(numdibujo), k -> new ArrayList<>()).add(pt);
         msgt.convertAndSend("/topic/newpoint." + numdibujo, pt);
         
-        // Comprobar si se ha alcanzado el número de puntos para formar un polígono
+       
         if (drawings.get(Integer.parseInt(numdibujo)).size() >= 4) {
             Polygon polygon = new Polygon(drawings.get(Integer.parseInt(numdibujo))); 
             System.out.println("Nuevo Poligono en el servidor!:" + polygon.toString());
             msgt.convertAndSend("/topic/newpolygon." + numdibujo, polygon);
-            drawings.remove(Integer.parseInt(numdibujo)); // Limpiar los puntos una vez que se forma el polígono
+            drawings.remove(Integer.parseInt(numdibujo)); 
         }
     }
 }
