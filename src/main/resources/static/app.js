@@ -16,22 +16,22 @@ var app = (function () {
         ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
         ctx.stroke();
     };
-    // var addPolygonCanvas = function (polygon) {
-    //     var canvas = document.getElementById("canvas");
-    //     var ctx = canvas.getContext("2d");
+    var addPolygonCanvas = function (polygon) {
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
 
-    //     ctx.beginPath();
-    //     if (polygon.points.length > 0) {
-    //         ctx.moveTo(polygon.points[0].x, polygon.points[0].y);
+        ctx.beginPath();
+        if (polygon.points.length > 0) {
+            ctx.moveTo(polygon.points[0].x, polygon.points[0].y);
 
-    //         for (var i = 1; i < polygon.points.length; i++) {
-    //             ctx.lineTo(polygon.points[i].x, polygon.points[i].y);
-    //         }
+            for (var i = 1; i < polygon.points.length; i++) {
+                ctx.lineTo(polygon.points[i].x, polygon.points[i].y);
+            }
 
-    //         ctx.closePath();
-    //         ctx.stroke();
-    //     }
-    // };
+            ctx.closePath();
+            ctx.stroke();
+        }
+    };
     
     var getMousePosition = function (evt) {
         var canvas = document.getElementById("canvas");
@@ -53,10 +53,10 @@ var app = (function () {
                 var point = JSON.parse(eventbody.body);
                 addPointToCanvas(new Point(point.x, point.y));
             });
-            // stompClient.subscribe(`/topic/newpolygon.${number}`, function (eventbody) {
-            //     var theObject = JSON.parse(eventbody.body);
-            //     addPolygonCanvas(theObject);
-            // });
+            stompClient.subscribe(`/topic/newpolygon.${number}`, function (eventbody) {
+                var theObject = JSON.parse(eventbody.body);
+                addPolygonCanvas(theObject);
+            });
         });
     };
     
@@ -64,7 +64,7 @@ var app = (function () {
 
         init: function () {
             var can = document.getElementById("canvas");
-            // var button = document.getElementById("polygon");
+            var button = document.getElementById("polygon");
             // Connect WebSocket
             connectAndSubscribe();
 
@@ -74,31 +74,31 @@ var app = (function () {
                 app.publishPoint(mousePos.x, mousePos.y);
             });
 
-            // Listen for clicks on the button to connect points
+            //Listen for clicks on the button to connect points
 
-            // button.addEventListener('click', function (evt) {
-            //     valor = document.getElementById("connect").value;
+            button.addEventListener('click', function (evt) {
+                valor = document.getElementById("connect").value;
 
-            //     // Verificar que el campo no esté vacío y que el valor sea numérico
-            //     if (valor && !isNaN(valor) && Number.isInteger(Number(valor)) && Number(valor) > 0) {
-            //         // Limpiar el canvas antes de suscribirse y dibujar
-            //         clearCanvas();
+                // Verificar que el campo no esté vacío y que el valor sea numérico
+                if (valor && !isNaN(valor) && Number.isInteger(Number(valor)) && Number(valor) > 0) {
+                    // Limpiar el canvas antes de suscribirse y dibujar
+                    clearCanvas();
 
-            //         // Desconectar si ya hay una conexión activa
-            //         if (stompClient !== null) {
-            //             stompClient.disconnect(function () {
-            //                 console.log('Disconnected from previous subscription.');
-            //                 connectAndSubscribe(valor);
-            //             });
-            //         } else {
-            //             connectAndSubscribe(valor);
-            //         }
+                    // Desconectar si ya hay una conexión activa
+                    if (stompClient !== null) {
+                        stompClient.disconnect(function () {
+                            console.log('Disconnected from previous subscription.');
+                            connectAndSubscribe(valor);
+                        });
+                    } else {
+                        connectAndSubscribe(valor);
+                    }
 
-            //         console.log('Attempting to connect with valor: ' + valor);
-            //     } else {
-            //         alert('Por favor ingrese un número válido.');
-            //     }
-            // });
+                    console.log('Attempting to connect with valor: ' + valor);
+                } else {
+                    alert('Por favor ingrese un número válido.');
+                }
+            });
         },
 
         publishPoint: function(px, py){
