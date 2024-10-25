@@ -1,7 +1,8 @@
 ### Escuela Colombiana de Ingeniería
 ### Arquitecturas de Software - ARSW
 ### Laboratorio - Broker de Mensajes STOMP con WebSockets + HTML5 Canvas.
-
+### JUAN PABLO FERNANDEZ GONZALES
+### CESAR AMAYA GOMEZ
 
 
 - Conectarse con un botón
@@ -114,7 +115,15 @@ Para ver cómo manejar esto desde el manejador de eventos STOMP del servidor, re
 
 	```
 
+ ![image](https://github.com/user-attachments/assets/b815a1e8-c6f7-49be-9f53-db18dfdf3572)
+
+ se crea el controlador y por ser un proyecto pequeño, manejamos la logica de los puntos del poligono dentro del mismo controlador
+
+
 2. Ajuste su cliente para que, en lugar de publicar los puntos en el tópico /topic/newpoint.{numdibujo}, lo haga en /app/newpoint.{numdibujo}. Ejecute de nuevo la aplicación y rectifique que funcione igual, pero ahora mostrando en el servidor los detalles de los puntos recibidos.
+
+   ![image](https://github.com/user-attachments/assets/cfa40599-83b6-4d02-90e2-24ae93926806)
+
 
 3. Una vez rectificado el funcionamiento, se quiere aprovechar este 'interceptor' de eventos para cambiar ligeramente la funcionalidad:
 
